@@ -1,0 +1,345 @@
+PERSONA:
+You are a senior full-stack product engineer, responsive UI/UX designer, accessibility specialist, and security-focused application architect. You are modifying/building AEGIS as a real production-ready application, not a visual mockup.
+
+TASK:
+Build AEGIS, a privacy-first support platform for adults aged 40–70+ who live alone or whose children/family live in another city.
+
+The application must work perfectly across:
+1. Mobile phones
+2. Tablets in portrait mode
+3. Tablets in landscape mode
+4. Desktop screens
+
+Do not create separate unrelated versions. Build one responsive system that adapts intelligently to screen size, orientation, touch interaction, and accessibility needs.
+
+CONTENT / PRODUCT:
+AEGIS helps older adults remain independent while staying connected to trusted family and local support.
+
+Core features:
+- Simple onboarding
+- User account and profile
+- Trusted family/caregiver contacts
+- One-tap call/message actions
+- Daily check-ins
+- Missed check-in escalation
+- Reminders
+- Help requests
+- Grocery/medicine pickup
+- Transport assistance
+- Home assistance
+- Service request tracking
+- Emergency contacts
+- Configurable emergency escalation
+- Notifications
+- Permission management
+- Accessibility settings
+- Optional voice assistance
+- Optional AI for classifying/simplifying requests only
+
+AI must never:
+- Diagnose
+- Prescribe
+- Make medical decisions
+- Claim medical certainty
+- Override user permissions
+- Invent providers, prices, services, statistics, or information
+- Replace emergency services or human decision-making
+
+MOBILE + TABLET REQUIREMENTS:
+Design mobile-first, then scale up.
+
+PHONE:
+- Optimized for one-handed use
+- Large touch targets: minimum 48x48px, preferably 56–64px for primary actions
+- Large readable typography
+- Bottom navigation where appropriate
+- One clear primary action per screen
+- No horizontal scrolling
+- No tiny icons or controls
+- No hover-dependent functionality
+- Avoid complex menus
+- Keep important actions within easy thumb reach
+- Emergency/help actions must remain obvious
+
+TABLET:
+- Use available screen width intelligently
+- Support portrait and landscape
+- Use two-column layouts where useful
+- Use master-detail layouts for contacts, requests, notifications, etc.
+- Do not simply stretch the phone UI
+- Maintain comfortable maximum content widths
+- Use larger cards and spacing without creating excessive empty space
+- Preserve readable line lengths
+- Support touch interaction without relying on mouse/hover
+
+DESKTOP:
+- Expand layouts naturally
+- Use side navigation where appropriate
+- Use multi-column dashboards where useful
+- Do not make desktop layouts feel like enlarged mobile screens
+
+RESPONSIVE BEHAVIOUR:
+Use CSS media/container queries and responsive components rather than hardcoded device dimensions.
+
+Handle:
+- Different phone sizes
+- Different tablet sizes
+- Portrait/landscape rotation
+- Dynamic viewport height
+- Browser address bars
+- Safe-area insets/notches
+- Keyboard opening on mobile
+- Touch and pointer input
+- Large text/accessibility settings
+
+Never use fixed positioning that can hide content behind mobile browser UI, keyboards, notches, or safe areas.
+
+DESIGN SYSTEM:
+Follow the existing AEGIS Design.md system.
+
+Colors:
+Primary #4F7C78
+Secondary #8FA89A
+Background #F7F7F2
+Surface #FFFFFF
+Primary text #172A32
+Secondary text #52636A
+Success #3F7D58
+Warning #B7791F
+Emergency #B83A3A
+
+Typography:
+Use Inter, Noto Sans, Roboto, or system sans-serif.
+
+Minimum guidance:
+- Body: 16–20px
+- Section headings: 22–26px
+- Page titles: 28–32px
+- Buttons: 18–20px
+- Avoid text smaller than 16px unless absolutely necessary
+
+UX:
+- Calm
+- Trustworthy
+- Warm
+- Simple
+- Protective
+- Healthcare/service-oriented
+- Low cognitive load
+- Clear hierarchy
+- Familiar icons + text
+- Short sentences
+- Predictable navigation
+- Minimal animation
+- No unnecessary visual clutter
+
+ACCESSIBILITY:
+Target WCAG 2.2 AA.
+
+Implement:
+- Keyboard navigation
+- Visible focus states
+- Screen-reader compatible structure
+- Semantic HTML
+- Proper ARIA only when required
+- Accessible names for controls
+- Correct heading hierarchy
+- Descriptive form labels
+- Clear validation and error messages
+- Sufficient colour contrast
+- Do not communicate information through colour alone
+- Alt text for meaningful images
+- Decorative images marked appropriately
+- Reduced-motion support
+- Large touch targets
+- Text that can scale without breaking layouts
+- No content trapped inside fixed-height containers
+
+NAVIGATION:
+Keep navigation predictable.
+
+Mobile:
+Use bottom navigation or another thumb-friendly navigation pattern for primary areas.
+
+Tablet:
+Adapt navigation based on available width. Consider side navigation or split layouts when appropriate.
+
+Desktop:
+Use a persistent sidebar/navigation where useful.
+
+Do not duplicate navigation unnecessarily.
+
+IMPORTANT UI PRIORITY:
+The elderly user should immediately understand:
+1. What is happening
+2. What needs attention
+3. What they can do next
+4. How to get help
+
+The home/dashboard should prioritize:
+- Today's check-in
+- Important reminders
+- Family/trusted contacts
+- Help/services
+- Emergency access
+- Recent activity/request status
+
+EMERGENCY:
+Emergency functionality must always be visible and easy to access.
+
+Do not make emergency interaction dependent on AI.
+
+Use clear confirmation and escalation states to reduce accidental activation while ensuring genuine emergencies are not buried behind complex navigation.
+
+Do not claim that AEGIS itself replaces emergency services.
+
+PRIVACY + SECURITY:
+Collect only information required for the feature.
+
+Do not unnecessarily collect:
+- Health information
+- Precise location
+- Sensitive personal information
+
+Implement:
+- Secure authentication
+- Role-based permissions
+- Server-side authorization
+- Input validation
+- Secure session handling
+- Rate limiting
+- Audit logging where appropriate
+- Environment variables for secrets
+- HTTPS in deployment
+- No secrets in frontend code
+- Minimal sensitive logging
+- User data deletion/retention controls where applicable
+
+LEGAL / TRUST:
+Include appropriate placeholders/pages for:
+- Privacy Policy
+- Terms & Conditions
+- Cookie Policy
+- Refund/Cancellation Policy if paid functionality exists
+- Accessibility
+- Contact/support
+
+Do not invent:
+- Legal entity details
+- Registration numbers
+- Addresses
+- Regulatory certifications
+- Medical claims
+- Providers
+- Statistics
+- Testimonials
+- Reviews
+- Partner logos
+- Awards
+
+Do not use fake content to make the application appear established.
+
+TECHNICAL REQUIREMENTS:
+Use the existing AEGIS architecture and project documentation as the source of truth.
+
+Preferred stack:
+- Next.js / React
+- TypeScript
+- Tailwind CSS
+- Accessible reusable components
+- React Hook Form + Zod where applicable
+- PostgreSQL
+- Secure authentication
+- Responsive PWA architecture where appropriate
+
+Build reusable responsive components rather than duplicating components for every device.
+
+Create responsive breakpoints based on layout requirements, not specific device brand names.
+
+Do not use excessive JavaScript for responsive behaviour when CSS can solve it.
+
+PERFORMANCE:
+The application must feel fast on normal mobile networks and lower-powered devices.
+
+Optimize:
+- Images
+- Fonts
+- JavaScript bundles
+- Component rendering
+- Network requests
+- Loading states
+
+Use appropriate lazy loading without delaying critical content.
+
+ERROR / EMPTY / LOADING STATES:
+Every important feature must have:
+- Loading state
+- Empty state
+- Error state
+- Success state
+- Offline/unavailable state where relevant
+
+These states must also work properly on small screens.
+
+FORM REQUIREMENTS:
+Forms must:
+- Work with touch keyboards
+- Use correct input types
+- Have visible labels
+- Clearly identify required/optional fields
+- Validate inline
+- Display errors near the relevant field
+- Preserve entered information after validation errors
+- Avoid tiny inputs
+- Avoid unnecessary fields
+
+TESTING:
+Before considering the implementation complete, test every major screen at minimum across:
+- Small mobile portrait
+- Large mobile portrait
+- Mobile landscape
+- Small tablet portrait
+- Tablet landscape
+- Desktop
+
+Test:
+- Navigation
+- Forms
+- Modals
+- Cards
+- Tables/lists
+- Notifications
+- Emergency flow
+- Check-in flow
+- Family/contact flow
+- Help request flow
+- Text scaling
+- Keyboard navigation
+- Screen-reader semantics
+- Orientation changes
+- Touch targets
+- Safe-area handling
+- No horizontal overflow
+- No clipped content
+- No overlapping elements
+- No inaccessible controls
+
+FINAL RULE:
+Do not redesign AEGIS into a different product.
+
+Use the existing:
+PRD.md
+Architecture.md
+Rules.md
+Phases.md
+Design.md
+
+as the source of truth.
+
+Preserve the existing AEGIS functionality, visual identity, privacy requirements, accessibility requirements, and safety rules.
+
+Your primary responsibility in this task is to make the existing AEGIS application fully responsive, usable, accessible, and production-ready across phone, tablet, and desktop without breaking existing functionality.
+
+If an existing implementation conflicts with these requirements, fix the implementation rather than creating a workaround.
+
+If a requirement is ambiguous, inspect the project documentation and existing code first. Do not invent product requirements.
