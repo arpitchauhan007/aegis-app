@@ -1,0 +1,1 @@
+{"version":3,"file":"familyMember.d.ts","sourceRoot":"","sources":["../../../src/generated/types/familyMember.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AACH,OAAO,KAAK,EAAE,iBAAiB,EAAE,MAAM,qBAAqB,CAAC;AAE7D,MAAM,MAAM,YAAY,GAAG,iBAAiB,GAAG,CAAC;IAC9C,EAAE,EAAE,MAAM,CAAC;IACX,gBAAgB;IAChB,WAAW,EAAE,MAAM,GAAG,IAAI,CAAC;IAC3B,MAAM,EAAE,MAAM,CAAC;CAChB,CAAC,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"emergencyAlert.d.ts","sourceRoot":"","sources":["../../../src/generated/types/emergencyAlert.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AACH,OAAO,KAAK,EAAE,mBAAmB,EAAE,MAAM,uBAAuB,CAAC;AAEjE,MAAM,MAAM,cAAc,GAAG,mBAAmB,GAAG;IACjD,EAAE,EAAE,MAAM,CAAC;IACX,QAAQ,EAAE,MAAM,EAAE,CAAC;IACnB,SAAS,EAAE,MAAM,CAAC;CACnB,CAAC"}
