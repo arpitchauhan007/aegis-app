@@ -1,0 +1,558 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: AEGIS support coordination API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: API health operations
+  - name: dashboard
+    description: Today overview and recent activity
+  - name: family
+    description: Trusted family network
+  - name: support
+    description: Check-ins and requests for help
+  - name: services
+    description: Coordinated services
+  - name: health-records
+    description: User-controlled health organization
+  - name: emergency
+    description: Emergency contact notifications
+  - name: privacy
+    description: Consent and permissions
+  - name: profile
+    description: Profile and account settings
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /dashboard:
+    get:
+      operationId: getDashboard
+      tags: [dashboard]
+      summary: Get the Today overview
+      responses:
+        "200":
+          description: Current Today screen data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+  /activity:
+    get:
+      operationId: getActivity
+      tags: [dashboard]
+      summary: Get recent activity
+      responses:
+        "200":
+          description: Recent activity items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+  /check-ins:
+    post:
+      operationId: createCheckIn
+      tags: [support]
+      summary: Record a check-in
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckInInput"
+      responses:
+        "201":
+          description: Recorded check-in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckIn"
+  /family:
+    get:
+      operationId: getFamily
+      tags: [family]
+      summary: List trusted family members
+      responses:
+        "200":
+          description: Family members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FamilyMember"
+    post:
+      operationId: createFamilyMember
+      tags: [family]
+      summary: Add a trusted family member
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FamilyMemberInput"
+      responses:
+        "201":
+          description: Added family member
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FamilyMember"
+  /help-requests:
+    get:
+      operationId: getHelpRequests
+      tags: [support]
+      summary: List help requests
+      responses:
+        "200":
+          description: Help requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HelpRequest"
+    post:
+      operationId: createHelpRequest
+      tags: [support]
+      summary: Request help
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpRequestInput"
+      responses:
+        "201":
+          description: Created help request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpRequest"
+  /services:
+    get:
+      operationId: getServices
+      tags: [services]
+      summary: List service requests
+      responses:
+        "200":
+          description: Service requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ServiceRequest"
+    post:
+      operationId: createService
+      tags: [services]
+      summary: Request a service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceInput"
+      responses:
+        "201":
+          description: Created service request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceRequest"
+  /health-items:
+    get:
+      operationId: getHealthItems
+      tags: [health-records]
+      summary: List health reminders
+      responses:
+        "200":
+          description: Health reminders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HealthItem"
+    post:
+      operationId: createHealthItem
+      tags: [health-records]
+      summary: Add a health reminder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HealthItemInput"
+      responses:
+        "201":
+          description: Created health reminder
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthItem"
+  /emergency-alerts:
+    post:
+      operationId: createEmergencyAlert
+      tags: [emergency]
+      summary: Record an emergency alert in the shared demo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmergencyAlertInput"
+      responses:
+        "201":
+          description: Demo alert recorded; no contact or emergency service is notified
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmergencyAlert"
+  /notifications:
+    get:
+      operationId: getNotifications
+      tags: [dashboard]
+      summary: List notifications
+      responses:
+        "200":
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+  /permissions:
+    get:
+      operationId: getPermissions
+      tags: [privacy]
+      summary: List privacy permissions
+      responses:
+        "200":
+          description: Permission settings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Permission"
+  /permissions/{id}:
+    patch:
+      operationId: updatePermission
+      tags: [privacy]
+      summary: Update a privacy permission
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PermissionUpdate"
+      responses:
+        "200":
+          description: Updated permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Permission"
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [profile]
+      summary: Get the current profile
+      responses:
+        "200":
+          description: Current profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+    patch:
+      operationId: updateProfile
+      tags: [profile]
+      summary: Update profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileUpdate"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required: [status]
+    Dashboard:
+      type: object
+      properties:
+        greeting:
+          type: string
+        name:
+          type: string
+        statusLabel:
+          type: string
+        statusDetail:
+          type: string
+        checkInToday:
+          type: boolean
+        nextItem:
+          type: ["string", "null"]
+        nextItemTime:
+          type: ["string", "null"]
+        openRequests:
+          type: integer
+        familyOnline:
+          type: integer
+        emergencyContacts:
+          type: integer
+      required: [greeting, name, statusLabel, statusDetail, checkInToday, nextItem, nextItemTime, openRequests, familyOnline, emergencyContacts]
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+        timeLabel:
+          type: string
+        kind:
+          type: string
+      required: [id, title, detail, timeLabel, kind]
+    CheckInInput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [okay, help, urgent]
+        note:
+          type: string
+      required: [status]
+    CheckIn:
+      allOf:
+        - $ref: "#/components/schemas/CheckInInput"
+        - type: object
+          properties:
+            id:
+              type: integer
+            createdAt:
+              type: string
+          required: [id, createdAt]
+    FamilyMemberInput:
+      type: object
+      properties:
+        name:
+          type: string
+        relationship:
+          type: string
+        initials:
+          type: string
+        contact:
+          type: string
+        canSeeCheckIns:
+          type: boolean
+        canSeeRequests:
+          type: boolean
+      required: [name, relationship, initials, contact]
+    FamilyMember:
+      allOf:
+        - $ref: "#/components/schemas/FamilyMemberInput"
+        - type: object
+          properties:
+            id:
+              type: integer
+            lastCheckIn:
+              type: ["string", "null"]
+            status:
+              type: string
+          required: [id, lastCheckIn, status]
+    HelpRequestInput:
+      type: object
+      properties:
+        category:
+          type: string
+        description:
+          type: string
+        preferredTime:
+          type: string
+      required: [category, description]
+    HelpRequest:
+      allOf:
+        - $ref: "#/components/schemas/HelpRequestInput"
+        - type: object
+          properties:
+            id:
+              type: integer
+            status:
+              type: string
+            createdAt:
+              type: string
+          required: [id, status, createdAt]
+    ServiceInput:
+      type: object
+      properties:
+        category:
+          type: string
+        description:
+          type: string
+        preferredTime:
+          type: string
+      required: [category, description]
+    ServiceRequest:
+      allOf:
+        - $ref: "#/components/schemas/ServiceInput"
+        - type: object
+          properties:
+            id:
+              type: integer
+            status:
+              type: string
+            createdAt:
+              type: string
+          required: [id, status, createdAt]
+    HealthItemInput:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum: [medication, appointment, note]
+        title:
+          type: string
+        detail:
+          type: string
+        dueLabel:
+          type: string
+      required: [kind, title, detail, dueLabel]
+    HealthItem:
+      allOf:
+        - $ref: "#/components/schemas/HealthItemInput"
+        - type: object
+          properties:
+            id:
+              type: integer
+            completed:
+              type: boolean
+          required: [id, completed]
+    EmergencyAlertInput:
+      type: object
+      properties:
+        message:
+          type: string
+        contactIds:
+          type: array
+          items:
+            type: integer
+      required: [message]
+    EmergencyAlert:
+      allOf:
+        - $ref: "#/components/schemas/EmergencyAlertInput"
+        - type: object
+          properties:
+            id:
+              type: integer
+            notified:
+              type: array
+              items:
+                type: string
+            createdAt:
+              type: string
+          required: [id, notified, createdAt]
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+        timeLabel:
+          type: string
+        read:
+          type: boolean
+        kind:
+          type: string
+      required: [id, title, detail, timeLabel, read, kind]
+    Permission:
+      type: object
+      properties:
+        id:
+          type: integer
+        subject:
+          type: string
+        description:
+          type: string
+        enabled:
+          type: boolean
+        category:
+          type: string
+      required: [id, subject, description, enabled, category]
+    PermissionUpdate:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+      required: [enabled]
+    Profile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        phone:
+          type: ["string", "null"]
+        accessibilityLargeText:
+          type: boolean
+        reducedMotion:
+          type: boolean
+      required: [id, name, email, role, phone, accessibilityLargeText, reducedMotion]
+    ProfileUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        phone:
+          type: ["string", "null"]
+        accessibilityLargeText:
+          type: boolean
+        reducedMotion:
+          type: boolean
